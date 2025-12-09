@@ -9,48 +9,44 @@ pre: " <b> 1.10. </b> "
 
 ### Mục tiêu tuần 10:
 
-* Kết nối, làm quen với các thành viên trong First Cloud Journey.
-* Hiểu dịch vụ AWS cơ bản, cách dùng console & CLI.
 
 ### Các công việc cần triển khai trong tuần này:
 | Thứ | Công việc                                                                                                                                                                                   | Ngày bắt đầu | Ngày hoàn thành | Nguồn tài liệu                            |
 | --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------ | --------------- | ----------------------------------------- |
-| 2   | - Làm quen với các thành viên FCJ <br> - Đọc và lưu ý các nội quy, quy định tại đơn vị thực tập                                                                                             | 10/11/2025    | 10/11/2025       |
-| 3   | - Tìm hiểu AWS và các loại dịch vụ <br>&emsp; + Compute <br>&emsp; + Storage <br>&emsp; + Networking <br>&emsp; + Database <br>&emsp; + ... <br>                                            | 11/11/2025   | 11/11/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 4   | - Tạo AWS Free Tier account <br> - Tìm hiểu AWS Console & AWS CLI <br> - **Thực hành:** <br>&emsp; + Tạo AWS account <br>&emsp; + Cài AWS CLI & cấu hình <br> &emsp; + Cách sử dụng AWS CLI | 12/11/2025    | 12/11/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 5   | - Tìm hiểu EC2 cơ bản: <br>&emsp; + Instance types <br>&emsp; + AMI <br>&emsp; + EBS <br>&emsp; + ... <br> - Các cách remote SSH vào EC2 <br> - Tìm hiểu Elastic IP   <br>                  | 13/11/2025   | 13/11/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 6   | - **Thực hành:** <br>&emsp; + Tạo EC2 instance <br>&emsp; + Kết nối SSH <br>&emsp; + Gắn EBS volume                                                                                         | 14/11/2025   | 14/11/2025      | <https://cloudjourney.awsstudygroup.com/> |
+| 2   | - Tìm hiểu về Amazon S3 <br>&emsp; + Access Point + Storage Class <br> - Tìm hiểu về AWS Security Hub| 10/11/2025    | 10/11/2025       | <https://cloudjourney.awsstudygroup.com/> |
+| 3   | - Tìm hiểu Amazon DynamoDB <br> - Tìm và ôn lại AWS Backup| 11/11/2025   | 11/11/2025      | <https://cloudjourney.awsstudygroup.com/> |
+| 4   | - Thực hành: <br>&emsp; + Cài đặt Bedrock <br>&emsp; + Claude 3.5 Sonnet <br>&emsp;+ Kỹ thuật viết prompt<br>&emsp; + Xử lý giới hạn tốc độ| 12/11/2025    | 12/11/2025      | <https://cloudjourney.awsstudygroup.com/> |
+| 5   | - Học các khái niệm: <br>&emsp; + Amazon Simple Queue Service (Amazon SQS) <br>&emsp; + Amazon Simple Notification Service (SNS)<br>&emsp; + AWS Organizations <br>&emsp; + Amazon Macie <br>&emsp; + AWS Direct Connect| 13/11/2025   | 13/11/2025      | <https://cloudjourney.awsstudygroup.com/> |
+| 6   | - Tìm hiểu cách set up amplify <br> Ôn lại Amazon Cognito| 14/11/2025   | 14/11/2025      | <https://cloudjourney.awsstudygroup.com/> |
 
 
 ### Kết quả đạt được tuần 10:
 
-* Hiểu AWS là gì và nắm được các nhóm dịch vụ cơ bản: 
-  * Compute
-  * Storage
-  * Networking 
-  * Database
-  * ...
+* Nắm vững kiến thức về Amazon S3
+  * Cách hoạt động của S3 – object storage.
+  * Các loại Storage Class và khi nào nên dùng (Standard, IA, Glacier…).
+  * S3 Access Point để quản lý truy cập theo từng ứng dụng.
 
-* Đã tạo và cấu hình AWS Free Tier account thành công.
+* Biết Security Hub dùng để tổng hợp cảnh báo bảo mật từ nhiều dịch vụ AWS.
+* Hiểu các tiêu chuẩn như CIS, PCI DSS trong Security Hub.
 
-* Làm quen với AWS Management Console và biết cách tìm, truy cập, sử dụng dịch vụ từ giao diện web.
+* Hiểu NoSQL trên AWS.
+* Kiến trúc serverless, partition key, sort key, RCU/WCU.
 
-* Cài đặt và cấu hình AWS CLI trên máy tính bao gồm:
-  * Access Key
-  * Secret Key
-  * Region mặc định
-  * ...
+* Khái niệm backup plan.
 
-* Sử dụng AWS CLI để thực hiện các thao tác cơ bản như:
+* Cách tự động hóa sao lưu.
 
-  * Kiểm tra thông tin tài khoản & cấu hình
-  * Lấy danh sách region
-  * Xem dịch vụ EC2
-  * Tạo và quản lý key pair
-  * Kiểm tra thông tin dịch vụ đang chạy
-  * ...
+* Các resource hỗ trợ backup.
 
-* Có khả năng kết nối giữa giao diện web và CLI để quản lý tài nguyên AWS song song.
-* ...
+* Học các dịch vụ hỗ trợ truyền thông & bảo mật
+
+  * Amazon SQS – hàng đợi tin nhắn.
+  * Amazon SNS – dịch vụ pub/sub.
+  * AWS Organizations – quản lý đa tài khoản.
+  * Amazon Macie – bảo vệ dữ liệu nhạy cảm.
+  * AWS Direct Connect – kết nối mạng chuyên dụng.
+  
+* Tìm hiểu cách setup AWS Amplify để build frontend + backend.
 
 

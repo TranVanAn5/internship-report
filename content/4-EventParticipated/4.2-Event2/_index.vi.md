@@ -6,120 +6,77 @@ chapter: false
 pre: " <b> 4.2. </b> "
 ---
 
-{{% notice warning %}}
-⚠️ **Lưu ý:** Các thông tin dưới đây chỉ nhằm mục đích tham khảo, vui lòng **không sao chép nguyên văn** cho bài báo cáo của bạn kể cả warning này.
-{{% /notice %}}
 
-# Bài thu hoạch “GenAI-powered App-DB Modernization workshop”
+# Bài thu hoạch “BUILDING AGENTIC AI”
 
 ### Mục Đích Của Sự Kiện
 
-- Chia sẻ best practices trong thiết kế ứng dụng hiện đại
-- Giới thiệu phương pháp DDD và event-driven architecture
-- Hướng dẫn lựa chọn compute services phù hợp
-- Giới thiệu công cụ AI hỗ trợ development lifecycle
+- Tối ưu context với Amazon Bedrock
+- Xây dựng các AI agent automation với Amazon Bedrock thông qua các kỹ thuật thực hành và các trường hợp sử dụng trong thế giới thực
 
 ### Danh Sách Diễn Giả
 
-- **Jignesh Shah** - Director, Open Source Databases
-- **Erica Liu** - Sr. GTM Specialist, AppMod
-- **Fabrianne Effendi** - Assc. Specialist SA, Serverless Amazon Web Services
+- **Nguyen Gia Hung** - Head of Solutions Architect, AWS
+- **Kien Nguyen** - Solutions Architect, AWS
+- **Viet Pham** - Founder & CEO, Diagflow
+- **Kha Van** - Community Leader, AWS
+- **Thang Ton** - Co-Founder & COO, Cloud Thinker
+- **Henry Bui** - Head of Engineering, Cloud Thinker
 
 ### Nội Dung Nổi Bật
 
-#### Đưa ra các ảnh hưởng tiêu cực của kiến trúc ứng dụng cũ
+#### Các kỹ thuật tối ưu hóa chi phí và hiệu suất cho các hệ thống AI agent
 
 - Thời gian release sản phẩm lâu → Mất doanh thu/bỏ lỡ cơ hội
 - Hoạt động kém hiệu quả → Mất năng suất, tốn kém chi phí
 - Không tuân thủ các quy định về bảo mật → Mất an ninh, uy tín
 
-#### Chuyển đổi sang kiến trúc ứng dụng mới - Microservice Architecture
+#### Bốn kỹ thuật “Quick Wins” để tối ưu hóa
 
-Chuyển đổi thành hệ thống modular – từng chức năng là một **dịch vụ độc lập** giao tiếp với nhau qua **sự kiện** với 3 trụ cột cốt lõi:
+#### Prompt Caching (Lưu trữ bộ nhớ đệm cho Prompt)
+Đây là kỹ thuật quan trọng nhất được đề cập, có thể giảm 70-90% chi phí và tăng tốc độ xử lý: Cấu trúc Context: Context window được chia thành 3 phần: (1) System & Tool Schema, (2) Conversation History (Lịch sử hội thoại), và (3) Objective Prompt (Mục tiêu hiện tại). Sai lầm thường gặp: Đa số mọi người chỉ cache phần System Prompt và Tool. Tuy nhiên, phần Conversation History mới là phần tốn kém nhất (có thể chiếm 80-90% chi phí) và thường bị bỏ qua. Chiến lược đúng: Cần đặt “checkpoint” sao cho toàn bộ lịch sử hội thoại cũng được cache. Mặc dù lần chạy đầu tiên (cache write) tốn thêm 25% chi phí, nhưng các lần sau sẽ tiết kiệm được 90%
 
-- **Queue Management**: Xử lý tác vụ bất đồng bộ
-- **Caching Strategy:** Tối ưu performance
-- **Message Handling:** Giao tiếp linh hoạt giữa services
+#### Context Compaction (Nén ngữ cảnh - Summarization)
 
-#### Domain-Driven Design (DDD)
+Cloud Thinker đã chỉ ra 1 kỹ thuật tóm tắt (Summarization) thông minh để tránh mất cache Cách cũ: Tạo một agent mới để tóm tắt hội thoại cũ. Cách này làm mất toàn bộ cache trước đó và thường làm giảm chất lượng (performance degradation). Cách mới (Cloudthinker technique): Giữ nguyên agent và lịch sử hội thoại (để tận dụng cache đã có), chỉ thay đổi phần “Objective Prompt” thành một task mới là “hãy tóm tắt đoạn hội thoại này”. Cách này giúp tận dụng cache hit, giảm chi phí tóm tắt từ ví dụ 0.3 đô xuống còn 0.03 đô (giảm ~90%) và cải thiện chất lượng đầu ra
 
-- **Phương pháp 4 bước**: Xác định domain events → sắp xếp timeline → identify actors → xác định bounded contexts
-- **Case study bookstore**: Minh họa cách áp dụng DDD thực tế
-- **Context mapping**: 7 patterns tích hợp bounded contexts
+#### Tool Consolidation (Hợp nhất công cụ) 
 
-#### Event-Driven Architecture
+Vấn đề với các giao thức mới như MCP (Model Context Protocol) là việc đưa quá nhiều công cụ (ví dụ 50 tool) vào context sẽ làm tràn bộ nhớ (context flooding). Giải pháp: Thay vì đưa toàn bộ schema (cấu trúc dữ liệu) phức tạp vào prompt, hãy sử dụng một “dictionary” đơn giản và gộp các instruction (hướng dẫn) lại. Just-in-time Instruction: Agent có thể sử dụng một lệnh đặc biệt (get instruction) để lấy hướng dẫn chi tiết về cách dùng công cụ chỉ khi cần thiết. Điều này giúp giảm số lượng token phải nạp vào input liên tục
 
-- **3 patterns tích hợp**: Publish/Subscribe, Point-to-point, Streaming
-- **Lợi ích**: Loose coupling, scalability, resilience
-- **So sánh sync vs async**: Hiểu rõ trade-offs (sự đánh đổi)
+#### Parallel Tool Calling (Gọi công cụ song song)
 
-#### Compute Evolution
-
-- **Shared Responsibility Model**: Từ EC2 → ECS → Fargate → Lambda
-- **Serverless benefits**: No server management, auto-scaling, pay-for-value
-- **Functions vs Containers**: Criteria lựa chọn phù hợp
-
-#### Amazon Q Developer
-
-- **SDLC automation**: Từ planning đến maintenance
-- **Code transformation**: Java upgrade, .NET modernization
-- **AWS Transform agents**: VMware, Mainframe, .NET migration
+Thay vì chạy tuần tự (sequential) như mô hình ReAct cũ (năm 2022), các model hiện đại cho phép chạy song song nhiều tool cùng lúc để tiết kiệm thời gian. Tuy nhiên, tính năng này thường không bật mặc định; lập trình viên cần thêm các câu lệnh instruction cụ thể (ví dụ: “maximize efficiency”) để ép model chạy song song
 
 ### Những Gì Học Được
 
-#### Tư Duy Thiết Kế
+#### Chiến lược quản lý chi phí
 
-- **Business-first approach**: Luôn bắt đầu từ business domain, không phải technology
-- **Ubiquitous language**: Importance của common vocabulary giữa business và tech teams
-- **Bounded contexts**: Cách identify và manage complexity trong large systems
+- **Input cost:** chiếm phần lớn chi phí vận hành AI agents chạy loop. Tức là mỗi vòng, Agent phải nạp lại toàn bộ context (Conversation history, system prompt, memory) Nên loop Agent chạy càng lâu thì sẽ càng đốt tiền -> History càng dài thì input tokens mỗi vòng càng tăng.
+- Solution: dùng Prompt Caching và checkpointing để giảm thiểu chi phí này. Giảm cost lên đến 80-90%.
 
-#### Kiến Trúc Kỹ Thuật
+#### Kỹ thuật “Tóm tắt” (Summarization) thông minh
 
-- **Event storming technique**: Phương pháp thực tế để mô hình hóa quy trình kinh doanh
-- Sử dụng **Event-driven communication** thay vì synchronous calls
-- **Integration patterns**: Hiểu khi nào dùng sync, async, pub/sub, streaming
-- **Compute spectrum**: Criteria chọn từ VM → containers → serverless
+Summarization: Giữ nguyên agent hiện tại và lịch sử hội thoại để tận dụng cache đã có, và giữ được context quality tốt hơn. Với kỹ thuật này, chi phí tóm tắt giảm từ 0.3 đô xuống còn 0.03 đô (giảm ~90%) và chất lượng đầu ra được cải thiện.
 
-#### Chiến Lược Hiện Đại Hóa
+#### Thiết kế công cụ (Tool Design): Tránh “ngập lụt” ngữ cảnh
+- Tool Design:
+   - Vấn đề: Quá nhiều tools được đưa vào (ví d: MCP với 50 tools) sẽ làm tràn ngữ cảnh (context flooding).
+   - Giải pháp: Tạo 1 lệnh đặc biệt để Agent tự gọi đến lấy instruction chi tiết khi cần, thay vì nhồi nhét toàn bộ schema vào prompt.
+   - Giúp context gọn nhẹ, giảm token usage và tăng hiệu suất.
 
-- **Phased approach**: Không rush, phải có roadmap rõ ràng
-- **7Rs framework**: Nhiều con đường khác nhau tùy thuộc vào đặc điểm của mỗi ứng dụng
-- **ROI measurement**: Cost reduction + business agility
+#### Tối ưu hiệu suất: Bắt buộc chạy song song (Parallel Tool Calling)
+- Maximize Efficiency: thêm hướng dẫn cụ thể vào prompt để ép model Implement các tác vụ song song thay vì tuần tự.
 
-### Ứng Dụng Vào Công Việc
-
-- **Áp dụng DDD** cho project hiện tại: Event storming sessions với business team
-- **Refactor microservices**: Sử dụng bounded contexts để identify service boundaries
-- **Implement event-driven patterns**: Thay thế một số sync calls bằng async messaging
-- **Serverless adoption**: Pilot AWS Lambda cho một số use cases phù hợp
-- **Try Amazon Q Developer**: Integrate vào development workflow để boost productivity
 
 ### Trải nghiệm trong event
 
-Tham gia workshop **“GenAI-powered App-DB Modernization”** là một trải nghiệm rất bổ ích, giúp tôi có cái nhìn toàn diện về cách hiện đại hóa ứng dụng và cơ sở dữ liệu bằng các phương pháp và công cụ hiện đại. Một số trải nghiệm nổi bật:
+Tham gia workshop “Building Agentic AI” là một trải nghiệm rất thú vị, nâng cao kiến thức về Agentic AI. Một số trải nghiệm nổi bật:
 
 #### Học hỏi từ các diễn giả có chuyên môn cao
-- Các diễn giả đến từ AWS và các tổ chức công nghệ lớn đã chia sẻ **best practices** trong thiết kế ứng dụng hiện đại.
-- Qua các case study thực tế, tôi hiểu rõ hơn cách áp dụng **Domain-Driven Design (DDD)** và **Event-Driven Architecture** vào các project lớn.
+- Các diễn giả đến từ AWS, Cloudthinker, Diaflow đã chia sẻ best practices trong thiết kế ứng dụng hiện đại.
 
-#### Trải nghiệm kỹ thuật thực tế
-- Tham gia các phiên trình bày về **event storming** giúp tôi hình dung cách **mô hình hóa quy trình kinh doanh** thành các domain events.
-- Học cách **phân tách microservices** và xác định **bounded contexts** để quản lý sự phức tạp của hệ thống lớn.
-- Hiểu rõ trade-offs giữa **synchronous và asynchronous communication** cũng như các pattern tích hợp như **pub/sub, point-to-point, streaming**.
-
-#### Ứng dụng công cụ hiện đại
-- Trực tiếp tìm hiểu về **Amazon Q Developer**, công cụ AI hỗ trợ SDLC từ lập kế hoạch đến maintenance.
-- Học cách **tự động hóa code transformation** và pilot serverless với **AWS Lambda**, từ đó nâng cao năng suất phát triển.
-
-#### Kết nối và trao đổi
-- Workshop tạo cơ hội trao đổi trực tiếp với các chuyên gia, đồng nghiệp và team business, giúp **nâng cao ngôn ngữ chung (ubiquitous language)** giữa business và tech.
-- Qua các ví dụ thực tế, tôi nhận ra tầm quan trọng của **business-first approach**, luôn bắt đầu từ nhu cầu kinh doanh thay vì chỉ tập trung vào công nghệ.
-
-#### Bài học rút ra
-- Việc áp dụng DDD và event-driven patterns giúp giảm **coupling**, tăng **scalability** và **resilience** cho hệ thống.
-- Chiến lược hiện đại hóa cần **phased approach** và đo lường **ROI**, không nên vội vàng chuyển đổi toàn bộ hệ thống.
-- Các công cụ AI như Amazon Q Developer có thể **boost productivity** nếu được tích hợp vào workflow phát triển hiện tại.
 
 #### Một số hình ảnh khi tham gia sự kiện
-* Thêm các hình ảnh của các bạn tại đây
-> Tổng thể, sự kiện không chỉ cung cấp kiến thức kỹ thuật mà còn giúp tôi thay đổi cách tư duy về thiết kế ứng dụng, hiện đại hóa hệ thống và phối hợp hiệu quả hơn giữa các team.
+![event2](/images/5.12-event.jpg)
+

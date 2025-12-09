@@ -19,7 +19,7 @@ pre: " <b> 1.9. </b> "
 | 5 | - Learn and supplement knowledge about React, Javascript | 11/06/2025 | 11/06/2025 |
 | 6 | - Learn and supplement knowledge of React, Javascript | 11/07/2025 | 11/07/2025 |
 
-### ### Week 9  s Achievements:
+### ### Week 9 Achievements:
 
 * Understand Amazon Bedrock, RAG, Knowledge Base
 
