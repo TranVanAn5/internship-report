@@ -6,8 +6,8 @@ chapter: false
 pre: " <b> 2. </b> "
 ---
 
-# IoT Weather Platform for Lab Research
-## A Unified AWS Serverless Solution for Real-Time Weather Monitoring
+# Academic Research Chatbot
+## AWS RAG-based solutions support smart learning and academic research
 
 ### 1. Executive Summary
 **Academic Research Chatbot** is an AI assistant that supports academic research, helping students and lecturers to look up, summarize and analyze scientific documents (PDFs, articles) through natural conversations with accurate source citations.
