@@ -1,33 +1,40 @@
 ---
-title: "Workshop"
-date: "`r Sys.Date()`"
-weight: 5
-chapter: false
-pre: " <b> 5. </b> "
+title : "Workshop"
+date :  "`r Sys.Date()`" 
+weight : 5
+chapter : false
+pre : " <b> 5. </b> "
 ---
-
-{{% notice warning %}}
-⚠️ **Lưu ý:** Các thông tin dưới đây chỉ nhằm mục đích tham khảo, vui lòng **không sao chép nguyên văn** cho bài báo cáo của bạn kể cả warning này.
-{{% /notice %}}
-
-
-# Đảm bảo truy cập Hybrid an toàn đến S3 bằng cách sử dụng VPC endpoint
 
 #### Tổng quan
 
-**AWS PrivateLink** cung cấp kết nối riêng tư đến các dịch vụ aws từ VPCs hoặc trung tâm dữ liệu (on-premise) mà không làm lộ lưu lượng truy cập ra ngoài public internet.
+Trong workshop này, chúng ta sẽ xây dựng **ARC (Academic Research Chatbot)** - một hệ thống chatbot thông minh hoạt động trên nền tảng **AWS Serverless**. Giải pháp này ứng dụng **Generative AI** và **RAG (Retrieval-Augmented Generation)** để hỗ trợ nghiên cứu học thuật, truy vấn tài liệu và trả lời câu hỏi một cách linh hoạt.
 
-Trong bài lab này, chúng ta sẽ học cách tạo, cấu hình, và kiểm tra VPC endpoints để cho phép workload của bạn tiếp cận các dịch vụ AWS mà không cần đi qua Internet công cộng.
+Thay vì trả lời các câu hỏi dựa trên kịch bản cố định (rule-based), hệ thống sử dụng mô hình **Claude 3.5 Sonnet** để hiểu ngôn ngữ tự nhiên, truy vấn dữ liệu từ cơ sở vector database và phản hồi người dùng một cách chính xác.
 
-Chúng ta sẽ tạo hai loại endpoints để truy cập đến Amazon S3: gateway vpc endpoint và interface vpc endpoint. Hai loại vpc endpoints này mang đến nhiều lợi ích tùy thuộc vào việc bạn truy cập đến S3 từ môi trường cloud hay từ trung tâm dữ liệu (on-premise).
-+ **Gateway** - Tạo gateway endpoint để gửi lưu lượng đến Amazon S3 hoặc DynamoDB using private IP addresses. Bạn điều hướng lưu lượng từ VPC của bạn đến gateway endpoint bằng các bảng định tuyến (route tables)
-+ **Interface** - Tạo interface endpoint để gửi lưu lượng đến các dịch vụ điểm cuối (endpoints) sử dụng Network Load Balancer để phân phối lưu lượng. Lưu lượng dành cho dịch vụ điểm cuối được resolved bằng DNS.
+#### Mục tiêu Workshop
+
+Sau khi hoàn thành workshop, bạn sẽ:
+
+- Hiểu kiến trúc RAG và cách áp dụng vào thực tế  
+- Triển khai hệ thống chatbot hoàn chỉnh trên AWS  
+- Sử dụng Amazon Bedrock (Claude 3.5 Sonnet + Cohere Embed)  
+- Xây dựng IDP pipeline với Amazon Textract  
+- Implement vector search với Qdrant  
+- Deploy infrastructure với Terraform  
+- Tích hợp authentication với Amazon Cognito  
 
 #### Nội dung
 
-1. [Tổng quan về workshop](5.1-Workshop-overview/)
-2. [Chuẩn bị](5.2-Prerequiste/)
-3. [Truy cập đến S3 từ VPC](5.3-S3-vpc/)
-4. [Truy cập đến S3 từ TTDL On-premises](5.4-S3-onprem/)
-5. [VPC Endpoint Policies (làm thêm)](5.5-Policy/)
-6. [Dọn dẹp tài nguyên](5.6-Cleanup/)
+1. [Giới thiệu](1-introduction/)
+2. [Các bước chuẩn bị](2-preparation/)
+3. [Kích hoạt Bedrock Models](3-bedrock-models/)
+4. [Cấu hình AWS CLI](4-aws-cli/)
+5. [Chuẩn bị Dữ liệu](5-data-preparation/)
+6. [Triển khai Infrastructure](6-infrastructure/)
+7. [Thiết lập Backend API](7-backend/)
+8. [Thiết lập IDP Pipeline](8-idp-pipeline/)
+9. [Thiết lập Frontend](9-frontend/)
+10. [Sử dụng Chatbot](10-using-chatbot/)
+11. [Sử dụng Admin Dashboard](11-admin-dashboard/)
+12. [Dọn dẹp Tài nguyên](12-cleanup/)
